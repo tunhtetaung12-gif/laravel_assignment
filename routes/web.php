@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
 
@@ -55,4 +56,8 @@ Route::get('categories/{id}', function ($id) {
 
 Route::get('/articles',[ArticleController::class,'index']);
 
-Route::get('/categories', [CategoryController::class, 'index']);
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+
+Route::get('/categories/{id}',[CategoryController::class,'show'])->name('categories.show');
+
+
