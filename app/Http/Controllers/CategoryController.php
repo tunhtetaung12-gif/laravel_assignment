@@ -40,7 +40,7 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
-     public function create()
+    public function create()
     {
         return view('categories.create');
     }
