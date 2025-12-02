@@ -10,12 +10,13 @@
 
 <body>
     <h1>Product List</h1>
-
+    <a href="{{ route('products.create') }}">Create New Product</a>
     @foreach ($products as $product)
         <p>{{ $product->id }} : {{ $product->name }}</p>
         <p>Price: {{ $product->price }} Ks</p>
 
         <a href="{{ route('products.show', ['id' => $product->id]) }}">show</a>
+        <a href="{{ route('products.edit', ['id' => $product->id]) }}">edit</a>
     @endforeach
 
 
