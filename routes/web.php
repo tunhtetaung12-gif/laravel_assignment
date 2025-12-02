@@ -47,9 +47,9 @@ Route::prefix('/backend')->group(function(){
 });
 
 // day_testing
-Route::get('categories/{id}', function ($id) {
-    return "This is Category Details => $id";
-});
+// Route::get('categories/{id}', function ($id) {
+//     return "This is Category Details => $id";
+// });
 
 // Route::get('/articles',function(){
 //     return view('articles.index');
@@ -59,7 +59,30 @@ Route::get('/articles',[ArticleController::class,'index']);
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
-Route::get('/categories/{id}',[CategoryController::class,'show'])->name('categories.show');
+// Route::get('/categories/{id}',[CategoryController::class,'show'])->name('categories.show');
+
+
+//Update for products
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products/store', [ProductController::class, 'store'])->name('products.store');
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('products.show');
+
+Route::get('/categories/{id}/edit',[CategoryController::class,'edit'])->name('categories.edit');
+Route::post('categories/{id}/update',[CategoryController::class,'update'])->name('categories.update');
+
+Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+Route::post('/categories/store', [CategoryController::class, 'store'])->name('categories.store');
+
+
+
+
+
+Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::post('/products/{id}/update', [ProductController::class, 'update'])->name('products.update');
+
+
+
+
+
