@@ -23,7 +23,7 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = Product::find($id); 
+        $product = Product::find($id);
         return view('products.edit', compact('product'));
     }
 
@@ -53,6 +53,13 @@ class ProductController extends Controller
             'price' => $request->price,
             'description' => $request->description,
         ]);
+
+        return redirect()->route('products.index');
+    }
+
+    public function delete($id){
+        $product=Product::find($id);
+        $product->delete();
 
         return redirect()->route('products.index');
     }

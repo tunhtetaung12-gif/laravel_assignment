@@ -85,5 +85,7 @@ Route::post('/products/{id}/update', [ProductController::class, 'update'])->name
 //delete
 Route::post('/categories/{id}/delete',[CategoryController::class,'delete'])->name('categories.delete');
 
+Route::post('/products/{id}/delete',[ProductController::class,'delete'])->name('products.delete');
+
 
 
