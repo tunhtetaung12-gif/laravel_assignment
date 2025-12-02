@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
@@ -53,5 +54,12 @@ class CategoryController extends Controller
 
         return redirect()->route('categories.index');
 
+    }
+
+    public function delete($id){
+        $category=Category::find($id);
+        $category->delete();
+
+        return redirect()->route('categories.index');
     }
 }

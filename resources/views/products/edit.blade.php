@@ -13,13 +13,13 @@
         @csrf
 
         <label>Name:</label>
-        <input type="text" name="name" value="{{ $product->name }}">
+        <input type="text" name="name" value="{{ $product->name }}"><br><br>
 
         <label>Price:</label>
-        <input type="number" name="price" value="{{ $product->price }}">
+        <input type="number" name="price" value="{{ $product->price }}"><br><br>
 
         <label>Description:</label>
-        <textarea name="description">{{ $product->description }}</textarea>
+        <textarea name="description">{{ $product->description }}</textarea><br><br>
 
         <button type="submit">Update</button>
     </form>

@@ -82,7 +82,8 @@ Route::post('/categories/store', [CategoryController::class, 'store'])->name('ca
 Route::get('/products/{id}/edit', [ProductController::class, 'edit'])->name('products.edit');
 Route::post('/products/{id}/update', [ProductController::class, 'update'])->name('products.update');
 
-
+//delete
+Route::post('/categories/{id}/delete',[CategoryController::class,'delete'])->name('categories.delete');
 
 
 
