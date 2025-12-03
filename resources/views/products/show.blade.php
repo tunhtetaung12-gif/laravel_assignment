@@ -46,9 +46,14 @@
                     <th>Price</th>
                     <td>{{ $product->price }} Ks</td>
                 </tr>
+
+                <tr>
+                    <th>Product Image</th>
+                    <td><img src="{{ asset('productImages/' . $product->image)}}" alt="{{ $product->image}}" style="width: 100px; height:auto" /></td>
+                </tr>
             </tbody>
         </table>
-        
+
         <div>
             <a href="{{ route('products.index') }}" class="btn btn-secondary btn-sm mt-2">
                 Back to Products
