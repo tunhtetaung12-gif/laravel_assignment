@@ -48,7 +48,7 @@
                         <td>{{$category['id']}}</td>
                         <td>{{$category['name']}}</td>
                         <td>
-                            <img src="{{ asset('categoryImages/' . $category->image)}}" alt="{{ $category->image}}" style="width: 100px; height:auto">
+                            <img src="{{ asset('categoryImages/' . $category->image)}}" alt="{{ $category->image}}" style="width: 100px; height:auto" />
                         </td>
                         <td class="d-flex">
                             <a href="{{ route('categories.edit', ['id' => $category->id]) }}" class="btn btn-outline-secondary btn-sm">Edit</a>

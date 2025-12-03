@@ -36,6 +36,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Price (Ks)</th>
+                <th>Product Image</th>
                 <th style="width: 220px;">Actions</th>
             </tr>
         </thead>
@@ -46,7 +47,7 @@
                     <td>{{ $product->id }}</td>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->price }}</td>
-
+                    <td><img src="{{ asset('productImages/' . $product->image)}}" alt="{{ $product->image}}" style="width: 100px; height:auto" /></td>
                     <td>
                         <a href="{{ route('products.show', $product->id) }}" class="btn btn-warning btn-sm">
                             Show
