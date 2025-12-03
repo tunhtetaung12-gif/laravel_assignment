@@ -23,12 +23,21 @@
     <div class="container mt-4">
         <div class="card">
             <div class="card-header">+ Category Create</div>
-            <form action="{{ route('categories.store') }}" method="POST">
+            <form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card-body">
                     <label for="name" class="form-input-label mb-2">Category Name:</label>
-                    <input type="text" class="form-control" placeholder="Enter Category Name" name="name" />
+                    <input type="text" class="form-control @error('name') is-invalid @enderror" placeholder="Enter Category Name" name="name" value="{{old('name')}}" />
+                    @error('name')
+                        <div class="invalid-feedback d-block">
+                            {{ $message}}
+                        </div>
+                    @enderror
                 </div>
+                <div class="card-body">
+                            <label for="image" class="form-input-label mb-2">Category Image</label>
+                            <input type="file" class="form-control" name="image">
+                        </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-outline-primary btn-sm me-2">Create</button>
                     <a href="{{ route('categories.index') }}" class="btn btn-outline-secondary btn-sm">Back</a>

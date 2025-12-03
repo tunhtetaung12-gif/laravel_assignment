@@ -38,6 +38,7 @@
                 <tr>
                     <th class="bg-secondary text-white">ID</th>
                     <th class="bg-secondary text-white">Name</th>
+                    <th class="bg-secondary text-white">Image</th>
                     <th class="bg-secondary text-white">Action</th>
                 </tr>
             </thead>
@@ -46,6 +47,9 @@
                     <tr>
                         <td>{{$category['id']}}</td>
                         <td>{{$category['name']}}</td>
+                        <td>
+                            <img src="{{ asset('categoryImages/' . $category->image)}}" alt="{{ $category->image}}" style="width: 100px; height:auto">
+                        </td>
                         <td class="d-flex">
                             <a href="{{ route('categories.edit', ['id' => $category->id]) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
                             <form action="{{ route('categories.delete', ['id' => $category->id]) }}" method="POST">
