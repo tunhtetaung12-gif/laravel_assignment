@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryUpdateRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class CategoryController extends Controller
@@ -24,10 +26,53 @@ class CategoryController extends Controller
         return view('categories.index',compact('data'));
     }
 
-    public function show($id)
+    public function edit($id)
     {
         $category=Category::find($id);
 
-        return view('categories.show',compact('category'));
+        return view('categories.edit',compact('category'));
+    }
+
+    public function update(CategoryUpdateRequest $request)
+    {
+        $category = Category::find($request->id);
+        $category->update([
+            'name'=>$request->name,
+        ]);
+        return redirect()->route('categories.index');
+    }
+
+    public function create()
+    {
+        return view('categories.create');
+    }
+
+    public function store(Request $request)
+    {
+        // dd($request->all());
+        $data=$request->validate([
+            'name'=>'required|string',
+            'image'=>'required'
+        ]);
+
+        if($request->hasFile('image'))
+        {
+            $imageName=time() . '.' . $request->image->extension();
+
+            $request -> image->move(public_path('categoryImages'),$imageName);
+
+            $data = array_merge($data,['image'=>$imageName]);
+        }
+        Category::create($data);
+
+        return redirect()->route('categories.index');
+
+    }
+
+    public function delete($id){
+        $category=Category::find($id);
+        $category->delete();
+
+        return redirect()->route('categories.index');
     }
 }
