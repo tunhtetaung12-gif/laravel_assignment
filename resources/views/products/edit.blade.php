@@ -64,7 +64,7 @@
 
                 <div class="card-body">
                     <label for="image" class="form-input-label mb-2">Upload New Image</label>
-                    <input type="file" class="form-control" name="image">
+                    <input type="file" class="form-control" name="image" />
                 </div>
 
                 <button type="submit" class="btn btn-success">Update Product</button>

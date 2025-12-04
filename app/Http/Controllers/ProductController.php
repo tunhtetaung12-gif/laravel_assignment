@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\ProductStoreRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -48,7 +49,7 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store(Request $request)
+    public function store(ProductStoreRequest $request)
     {
         // Product::create([
         //     'name' => $request->name,
