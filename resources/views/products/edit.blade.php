@@ -32,7 +32,7 @@
         <div class="card shadow-lg p-4">
             <form action="{{ route('products.update', $product->id) }}" method="POST">
                 @csrf
-                <div class="mb-3">
+                <div class="card-body mb-3">
                     <label class="form-label">Product Name</label>
                     <input type="text" name="name" class="form-control" value="{{ $product->name }}" />
                     @error('name')
@@ -42,7 +42,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
+                <div class="card-body mb-3">
                     <label class="form-label">Price</label>
                     <input type="number" name="price" class="form-control" value="{{ $product->price }}" />
                     @error('price')
@@ -52,7 +52,7 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
+                <div class="card-body mb-3">
                     <label class="form-label">Description</label>
                     <textarea name="description" class="form-control" rows="3">{{ $product->description }}</textarea>
                     @error('description')
@@ -61,6 +61,27 @@
                         </div>
                     @enderror
                 </div>
+
+                <div class="card-body">
+                    <label for="category" class="form-label">Select Your Category</label>
+                    <select name="category_id" id="category_id" class="form-select">
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="card-body">
+                    <label for="status" class="form-label">Status</label>
+                    <select name="status" id="status" class="form-select">
+                        <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Active</option>
+                        <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Expired</option>
+                    </select>
+                </div>
+
 
                 <div class="card-body">
                     <label for="image" class="form-input-label mb-2">Upload New Image</label>

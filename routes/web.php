@@ -2,6 +2,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserController;
 use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 use Illuminate\View\View;
@@ -87,5 +88,7 @@ Route::post('/categories/{id}/delete',[CategoryController::class,'delete'])->nam
 
 Route::post('/products/{id}/delete',[ProductController::class,'delete'])->name('products.delete');
 
+//user route
 
+Route::resource('users', UserController::class);
 

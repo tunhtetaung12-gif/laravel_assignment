@@ -14,8 +14,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        //
-        $products=Product::with('category')->get();
+        $products = Product::with('category')->get();
         return view('products.index', compact('products'));
     }
 
@@ -28,9 +27,11 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $product = Product::find($id);
-        return view('products.edit', compact('product'));
+        $product = Product::with('category')->findOrFail($id);
+        $categories = Category::all();
+        return view('products.edit', compact('product', 'categories'));
     }
+
 
 
     public function update(ProductUpdateRequest $request, $id)
@@ -50,7 +51,7 @@ class ProductController extends Controller
     {
         $categories = Category::get();
 
-        return view('products.create',compact('categories'));
+        return view('products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -61,22 +62,21 @@ class ProductController extends Controller
         //     'description' => $request->description,
         // ]);
 
-        $data=$request->validate([
-            'name'=>'required|string',
-            'price'=>'required|integer',
-            'description'=>'required|string',
-            'image'=>'required',
-            'category_id'=>'required',
-            'status'=>'nullable',
+        $data = $request->validate([
+            'name' => 'required|string',
+            'price' => 'required|integer',
+            'description' => 'required|string',
+            'image' => 'required',
+            'category_id' => 'required',
+            'status' => 'nullable',
         ]);
 
-        if($request->hasFile('image'))
-        {
-            $imageName=time() . '.' . $request->image->extension();
+        if ($request->hasFile('image')) {
+            $imageName = time() . '.' . $request->image->extension();
 
-            $request -> image->move(public_path('productImages'),$imageName);
+            $request->image->move(public_path('productImages'), $imageName);
 
-            $data = array_merge($data,['image'=>$imageName]);
+            $data = array_merge($data, ['image' => $imageName]);
         }
 
         $data['status'] = $request->has('status') ? true : false;
@@ -86,8 +86,9 @@ class ProductController extends Controller
         return redirect()->route('products.index');
     }
 
-    public function delete($id){
-        $product=Product::find($id);
+    public function delete($id)
+    {
+        $product = Product::find($id);
         $product->delete();
 
         return redirect()->route('products.index');
