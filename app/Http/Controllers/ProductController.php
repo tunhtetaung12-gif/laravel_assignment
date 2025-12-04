@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 
@@ -13,7 +14,8 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::all();
+        //
+        $products=Product::with('category')->get();
         return view('products.index', compact('products'));
     }
 
@@ -46,10 +48,12 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('products.create');
+        $categories = Category::get();
+
+        return view('products.create',compact('categories'));
     }
 
-    public function store(ProductStoreRequest $request)
+    public function store(Request $request)
     {
         // Product::create([
         //     'name' => $request->name,
@@ -61,7 +65,9 @@ class ProductController extends Controller
             'name'=>'required|string',
             'price'=>'required|integer',
             'description'=>'required|string',
-            'image'=>'required'
+            'image'=>'required',
+            'category_id'=>'required',
+            'status'=>'nullable',
         ]);
 
         if($request->hasFile('image'))
@@ -72,6 +78,8 @@ class ProductController extends Controller
 
             $data = array_merge($data,['image'=>$imageName]);
         }
+
+        $data['status'] = $request->has('status') ? true : false;
 
         Product::create($data);
 

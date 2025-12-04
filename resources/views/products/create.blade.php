@@ -67,14 +67,26 @@
                         @enderror
                     </div>
                     <div class="card-body">
+                        <label for="category" class="form-label">Select Your Category</label>
+                        <select name="category_id" id="category_id" class="form-select">
+                            @foreach ($categories as $category)
+                                <option value="{{$category->id}}">{{$category->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="card-body">
                         <label for="image" class="form-input-label mb-2">Product Image</label>
                         <input type="file" class="form-control" name="image">
+                    </div>
+                    <div>
+                        <label for="" class="form-label me-3">Active or Expired:</label>
+                        <input type="checkbox" class="form-check-input mb-2" name="status" role="switch" checked>
                     </div>
                     <button type="submit" class="btn btn-primary">Create Product</button>
             </form>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
     </script>

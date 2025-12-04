@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <title>Products</title>
 </head>
 
@@ -26,56 +27,68 @@
 
     <div class="container mt-5">
 
-    <h1 class="mb-4 text-center">Product List</h1>
+        <h1 class="mb-4 text-center">Product List</h1>
 
-    <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Create New Product</a>
+        <a href="{{ route('products.create') }}" class="btn btn-primary mb-3">Create New Product</a>
 
-    <table class="table table-striped">
-        <thead class="table table-striped table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Price (Ks)</th>
-                <th>Product Image</th>
-                <th style="width: 220px;">Actions</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            @foreach ($products as $product)
+        <table class="table table-striped">
+            <thead class="table table-striped table-dark">
                 <tr>
-                    <td>{{ $product->id }}</td>
-                    <td>{{ $product->name }}</td>
-                    <td>{{ $product->price }}</td>
-                    <td><img src="{{ asset('productImages/' . $product->image)}}" alt="{{ $product->image}}" style="width: 100px; height:auto" /></td>
-                    <td>
-                        <a href="{{ route('products.show', $product->id) }}" class="btn btn-warning btn-sm">
-                            Show
-                        </a>
-
-                        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success btn-sm">
-                            Edit
-                        </a>
-
-                        <form action="{{ route('products.delete', $product->id) }}"
-                              method="POST"
-                              style="display:inline-block;">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-sm">
-                                Delete
-                            </button>
-                        </form>
-                    </td>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price (Ks)</th>
+                    <th>Categoty</th>
+                    <th>Product Image</th>
+                    <th>Status</th>
+                    <th style="width: 220px;">Actions</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
 
-</div>
+            <tbody>
+                @foreach ($products as $product)
+                    <tr>
+                        <td>{{ $product->id }}</td>
+                        <td>{{ $product->name }}</td>
+                        <td>{{ $product->price }}</td>
+                        <td>{{ $product['category']['name'] ?? '-' }}</td>
+                        <td><img src="{{ asset('productImages/' . $product->image) }}" alt="{{ $product->image }}"
+                                style="width: 100px; height:auto" /></td>
+                        <td>
+                            @if ($product->status == 1)
+                                <span class="text-success">Active</span>
+                            @else
+                                <span class="text-danger">Expired</span>
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('products.show', $product->id) }}" class="btn btn-warning btn-sm">
+                                Show
+                            </a>
+
+                            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-success btn-sm">
+                                Edit
+                            </a>
+
+                            <form action="{{ route('products.delete', $product->id) }}" method="POST"
+                                style="display:inline-block;">
+                                @csrf
+                                <button type="submit" class="btn btn-danger btn-sm">
+                                    Delete
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
+    </script>
 </body>
 
 </html>
