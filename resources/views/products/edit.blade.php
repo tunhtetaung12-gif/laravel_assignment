@@ -32,6 +32,7 @@
         <div class="card shadow-lg p-4">
             <form action="{{ route('products.update', $product->id) }}" method="POST">
                 @csrf
+                @method('PUT')
                 <div class="card-body mb-3">
                     <label class="form-label">Product Name</label>
                     <input type="text" name="name" class="form-control" value="{{ $product->name }}" />

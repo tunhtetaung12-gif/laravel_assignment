@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -21,69 +22,45 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|email|unique:users,email',
-            'password'  => 'required|string|min:6',
-            'address'   => 'nullable|string',
-            'phone'     => 'nullable|string|max:50',
-            'gender'    => 'nullable|string',
-            'image'     => 'nullable|image|max:2048',
-            'status'    => 'nullable',
+        // dd($request->all());
+        $data = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|string',
+            'password' => 'required|string',
+            'address' => 'required|string',
+            'phone' => 'required',
+            'gender' => 'required|string',
+            'status' => 'nullable',
+            'image' => 'required',
         ]);
-
-        $data = $request->only(['name', 'email', 'address', 'phone', 'gender']);
-        $data['password'] = bcrypt($request->password);
 
         if ($request->hasFile('image')) {
             $imageName = time() . '.' . $request->image->extension();
+
             $request->image->move(public_path('userImages'), $imageName);
-            $data['image'] = $imageName;
+
+            $data = array_merge($data, ['image' => $imageName]);
         }
 
-        $data['status'] = $request->has('status') ? true : false;
 
+        $data['status'] = $request->has('status') ? true : false;
+        $data['password'] = Hash::make($data['password']);
         User::create($data);
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        return redirect()->route('users.index');
     }
 
-    public function show(User $user)
+    public function show($id)
     {
+        $user = User::findOrFail($id);
         return view('users.show', compact('user'));
     }
+
 
     public function edit(User $user)
     {
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
-    {
-        $request->validate([
-            'name'      => 'required|string|max:255',
-            'email'     => 'required|email|unique:users,email',
-            'password'  => 'required|string|min:6',
-            'address'   => 'nullable|string',
-            'phone'     => 'nullable|string|max:50',
-            'gender'    => 'nullable|string',
-            'image'     => 'nullable|image|max:2048',
-            'status'    => 'nullable',
-        ]);
-
-        $data = $request->all();
-
-
-        if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('userImages'), $imageName);
-            $data['image'] = $imageName;
-        }
-
-        $data['status'] = $request->has('status') ? true : false;
-
-        User::create($data);
-
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
-    }
+    public function update(Request $request, User $user) {}
 }
