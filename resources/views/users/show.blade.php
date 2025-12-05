@@ -37,8 +37,14 @@
             </div>
 
             <div class="mb-3">
-                <strong>Status:</strong> {{ $user->status ? 'Active' : 'Inactive' }}
+                <strong>Status:</strong>
+                @if ($user->status)
+                    <span class="text-success">Active</span>
+                @else
+                    <span class="text-danger">Inactive</span>
+                @endif
             </div>
+
 
             <div class="mb-3">
                 <strong>Profile Image:</strong><br>

@@ -64,7 +64,11 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $user = User::findOrFail($id);
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('users.index');
+        }
 
         $data = $request->validate([
             'name'     => 'required|string|max:255',
@@ -98,6 +102,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index');
     }
+
 
     public function delete($id)
     {

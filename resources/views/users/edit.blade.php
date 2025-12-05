@@ -46,7 +46,7 @@
                     @error('password')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
-                    <small class="text-muted">Leave blank if you don’t want to change the password.</small>
+                    {{-- <small class="text-muted">Leave blank if you don’t want to change the password.</small> --}}
                 </div>
 
                 <div class="mb-3">

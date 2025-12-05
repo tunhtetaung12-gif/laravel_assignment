@@ -41,7 +41,14 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone }}</td>
                         <td>{{ $user->gender }}</td>
-                        <td>{{ $user->status ? 'Active' : 'Inactive' }}</td>
+                        <td>
+                            @if ($user->status)
+                                <span class="text-success">Active</span>
+                            @else
+                                <span class="text-danger">Inactive</span>
+                            @endif
+                        </td>
+
                         <td>
                             @if ($user->image && file_exists(public_path('userImages/' . $user->image)))
                                 <img src="{{ asset('userImages/' . $user->image) }}" style="height:50px;">
