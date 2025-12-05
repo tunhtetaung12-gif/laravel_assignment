@@ -20,7 +20,7 @@
                 @csrf
                 @method('PUT')
 
-                {{-- Name --}}
+
                 <div class="mb-3">
                     <label class="form-label">User Name</label>
                     <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
@@ -30,7 +30,6 @@
                     @enderror
                 </div>
 
-                {{-- Email --}}
                 <div class="mb-3">
                     <label class="form-label">Email</label>
                     <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"
@@ -40,7 +39,6 @@
                     @enderror
                 </div>
 
-                {{-- Password --}}
                 <div class="mb-3">
                     <label class="form-label">Password</label>
                     <input type="password" name="password" class="form-control @error('password') is-invalid @enderror"
@@ -51,7 +49,6 @@
                     <small class="text-muted">Leave blank if you don’t want to change the password.</small>
                 </div>
 
-                {{-- Address --}}
                 <div class="mb-3">
                     <label class="form-label">Address</label>
                     <textarea name="address" class="form-control @error('address') is-invalid @enderror" rows="2"
@@ -61,7 +58,6 @@
                     @enderror
                 </div>
 
-                {{-- Phone --}}
                 <div class="mb-3">
                     <label class="form-label">Phone</label>
                     <input type="text" name="phone" class="form-control @error('phone') is-invalid @enderror"
@@ -71,7 +67,6 @@
                     @enderror
                 </div>
 
-                {{-- Gender --}}
                 <div class="mb-3">
                     <label class="form-label">Gender</label>
                     <select name="gender" class="form-select @error('gender') is-invalid @enderror">
@@ -80,15 +75,12 @@
                         </option>
                         <option value="female" {{ old('gender', $user->gender) == 'female' ? 'selected' : '' }}>Female
                         </option>
-                        <option value="other" {{ old('gender', $user->gender) == 'other' ? 'selected' : '' }}>Other
-                        </option>
                     </select>
                     @error('gender')
                         <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
 
-                {{-- Image --}}
                 <div class="mb-3">
                     <label class="form-label">Profile Image</label>
                     <input type="file" class="form-control @error('image') is-invalid @enderror" name="image">
@@ -102,7 +94,6 @@
                     @enderror
                 </div>
 
-                {{-- Status --}}
                 <div class="mb-3">
                     <label class="form-label me-3">Active Status:</label>
                     <input type="checkbox" name="status" class="form-check-input"

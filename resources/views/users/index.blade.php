@@ -50,15 +50,16 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-info">View</a>
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning">Edit</a>
-                            <form action="{{ route('users.destroy', $user) }}" method="POST"
-                                style="display:inline-block" onsubmit="return confirm('Delete?')">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-sm btn-danger">Delete</button>
-                            </form>
+                            <div class="d-flex gap-1">
+                                <a href="{{ route('users.show', $user) }}" class="btn btn-sm btn-info">View</a>
+                                <a href="{{ route('users.edit', $user) }}" class="btn btn-sm btn-warning">Edit</a>
+                                <form action="{{ route('users.delete', $user->id) }}" method="POST">
+                                    @csrf
+                                    <button class="btn btn-sm btn-danger">Delete</button>
+                                </form>
+                            </div>
                         </td>
+
                     </tr>
                 @empty
                     <tr>
