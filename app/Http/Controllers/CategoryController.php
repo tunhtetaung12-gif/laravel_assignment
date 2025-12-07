@@ -8,9 +8,15 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Repositories\Category\CategoryRepositoryInterface;
 
 class CategoryController extends Controller
 {
+    protected $categoryRepository;
+    public function __construct(CategoryRepositoryInterface $categoryRepository)
+    {
+        $this->categoryRepository=$categoryRepository;
+    }
     public function index()
     {
         // $categories = [
@@ -21,14 +27,17 @@ class CategoryController extends Controller
 
         // return view('categories.index', compact('categories'));
 
-        $data = Category::get();
+        // $data = Category::get();
 
+        $data=$this->categoryRepository->index();
         return view('categories.index',compact('data'));
     }
 
     public function edit($id)
     {
-        $category=Category::find($id);
+        // $category=Category::find($id);
+
+        $category = $this->categoryRepository->show($id);
 
         return view('categories.edit',compact('category'));
     }
@@ -63,15 +72,19 @@ class CategoryController extends Controller
 
             $data = array_merge($data,['image'=>$imageName]);
         }
-        Category::create($data);
+        // Category::create($data);
+
+        $this->categoryRepository->store($data);
 
         return redirect()->route('categories.index');
 
     }
 
     public function delete($id){
-        $category=Category::find($id);
-        $category->delete();
+        // $category=Category::find($id);
+        // $category->delete();
+
+        $this->categoryRepository->delete($id);
 
         return redirect()->route('categories.index');
     }

@@ -6,12 +6,20 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Repositories\User\UserRepositoryInterface;
 
 class UserController extends Controller
 {
+    protected $userRepository;
+
+    public function __construct(UserRepositoryInterface $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
     public function index()
     {
-        $users = User::all();
+        // $users = User::all();
+        $users = $this->userRepository->index();
         return view('users.index', compact('users'));
     }
 
@@ -45,20 +53,23 @@ class UserController extends Controller
 
         $data['status'] = $request->has('status') ? true : false;
         $data['password'] = Hash::make($data['password']);
-        User::create($data);
 
+        // User::create($data);
+        $this->userRepository->store($data);
         return redirect()->route('users.index');
     }
 
     public function show($id)
     {
-        $user = User::findOrFail($id);
+        // $user = User::find($id);
+        $user = $this->userRepository->show($id);
         return view('users.show', compact('user'));
     }
 
 
-    public function edit(User $user)
+    public function edit($id)
     {
+        $user = $this->userRepository->edit($id);
         return view('users.edit', compact('user'));
     }
 
@@ -99,16 +110,15 @@ class UserController extends Controller
         $data['status'] = $request->has('status') ? true : false;
 
         $user->update($data);
-
         return redirect()->route('users.index');
     }
 
 
     public function delete($id)
     {
-        $user = User::find($id);
-        $user->delete();
-
+        // $user = User::find($id);
+        // $user->delete();
+        $this->userRepository->delete($id);
         return redirect()->route('users.index');
     }
 }

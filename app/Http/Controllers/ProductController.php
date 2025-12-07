@@ -8,26 +8,36 @@ use App\Http\Requests\ProductStoreRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use App\Repositories\Product\ProductRepositoryInterface;
 
 
 class ProductController extends Controller
 {
+    protected $productRepository;
+    public function __construct(ProductRepositoryInterface $productRepository)
+    {
+        $this->productRepository = $productRepository;
+    }
+
     public function index()
     {
-        $products = Product::with('category')->get();
+        // $products = Product::with('category')->get();
+
+        $products = $this->productRepository->index();
         return view('products.index', compact('products'));
     }
 
     public function show($id)
     {
-        $product = Product::findOrFail($id);
+        // $product = Product::findOrFail($id);
+        $product = $this->productRepository->show($id);
         return view('products.show', compact('product'));
     }
 
 
     public function edit($id)
     {
-        $product = Product::with('category')->findOrFail($id);
+        $product = Product::with('category')->find($id);
         $categories = Category::all();
         return view('products.edit', compact('product', 'categories'));
     }
@@ -97,16 +107,19 @@ class ProductController extends Controller
 
         $data['status'] = $request->has('status') ? true : false;
 
-        Product::create($data);
+        // Product::create($data);
+
+        $this->productRepository->store($data);
 
         return redirect()->route('products.index');
     }
 
     public function delete($id)
     {
-        $product = Product::find($id);
-        $product->delete();
+        // $product = Product::find($id);
+        // $product->delete();
 
+        $this->productRepository->delete($id);
         return redirect()->route('products.index');
     }
 }
